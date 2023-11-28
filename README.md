@@ -2,6 +2,16 @@
 
 ## Description
 
+
+![screenshot pt 1](https://github.com/pmastropolo/hoarders-corner/assets/135174286/2d835f68-dae7-4943-90f8-0e1414a50a2e)
+
+![screenshot pt 2](https://github.com/pmastropolo/hoarders-corner/assets/135174286/740fd8b0-0e04-4a3b-9dbe-f91a22149bd0)
+
+![screenshot pt 3](https://github.com/pmastropolo/hoarders-corner/assets/135174286/0c0ff46a-922b-4bd6-a16e-57aa55175918)
+
+![screenshot pt 4](https://github.com/pmastropolo/hoarders-corner/assets/135174286/ff366a4b-dd37-48a2-8de3-8793f929a0bd)
+
+
 Hoarder's Corner is an innovative platform designed to cater to the diverse interests of collectors. This application serves as a virtual showcase for users to display, discuss, and potentially trade their cherished possessions. It offers a diverse range of collections for users to explore and join, providing a unique opportunity to connect with like-minded individuals.
 
 Within these groups, users can showcase items they wish to make public, fostering a sense of community and shared interest. This feature allows for interactive discussions about publicly displayed items, enhancing the overall user experience.
