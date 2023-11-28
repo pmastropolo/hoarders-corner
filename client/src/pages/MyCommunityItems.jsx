@@ -56,6 +56,8 @@ function IndividualItem({ name, description, owner, _id, openMessageModal, image
   );
 }
 
+
+
 function MessageModal({ name, closeModal }) {
   const [textAreaValue, setTextAreaValue] = useState("");
   const [sendMessage, { error }] = useMutation(SEND_MESSAGE, {
@@ -141,6 +143,8 @@ export default function MyCommunityItems() {
     variables: { communityId: communityId },
   });
   
+
+
   if (loading) return <p>Loading..</p>;
   if (error) return <p>Error</p>;
 
@@ -151,6 +155,9 @@ export default function MyCommunityItems() {
   );
  
   const myCommunityItems= data?.itemByCommunity.items.filter( (item) => item.owner === Auth.getProfile().authenticatedPerson.username);
+
+ 
+
 
   const handleGoBack = () => {
     navigate(-1);
@@ -239,6 +246,8 @@ export default function MyCommunityItems() {
       console.log(error);
     }
   };
+
+  
 
   return (
     <>
