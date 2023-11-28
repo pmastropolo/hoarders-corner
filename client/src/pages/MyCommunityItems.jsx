@@ -23,6 +23,12 @@ import SearchBar from "../components/SearchBar";
 import classes from "./itemss.css";
 
 function IndividualItem({ name, description, owner, _id, openMessageModal, imageUrl }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const descriptionStyle = {
+    display: isHovered ? 'block' : 'none', 
+  };
+
   return (
     <div className="border-x border-y rounded-lg shadow-lg border-b-[1px] border-opac-neu py-2 px-4 flex flex-col w-4/12" style={{ width: '30%' }}>
       <div className="px-1 py-1">
@@ -33,10 +39,14 @@ function IndividualItem({ name, description, owner, _id, openMessageModal, image
       <div className="flex flex-col w-full h-full py-3" style={{ position: 'relative' }}>
         {!imageUrl && <p>{description}</p>}
         {imageUrl && <>
-          <img src={imageUrl} alt={name} className={classes.image} />
-          <div className={classes.description}>
-            <p>{description}</p>
-          </div>
+          <img 
+            src={imageUrl} 
+            alt={name} 
+            className={classes.image} 
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          />
+          {description && <p style={descriptionStyle}>{description}</p>}
         </>}
       </div>
       <div className="flex w-full py-3">
@@ -130,7 +140,7 @@ export default function MyCommunityItems() {
   const { loading, data, error } = useQuery(QUERY_COMMUNITY_ITEMS, {
     variables: { communityId: communityId },
   });
-
+  
   if (loading) return <p>Loading..</p>;
   if (error) return <p>Error</p>;
 
@@ -139,12 +149,10 @@ export default function MyCommunityItems() {
   const joinedCommunity = data?.itemByCommunity.users.some(
     (user) => user._id === Auth.getProfile().authenticatedPerson._id
   );
+ 
+  const myCommunityItems= data?.itemByCommunity.items.filter( (item) => item.owner === Auth.getProfile().authenticatedPerson.username);
 
-  const myCommunityItems = data?.itemByCommunity.items.filter(
-    (item) => item.owner === Auth.getProfile().authenticatedPerson.username
-  );
-
-    const handleGoBack = () => {
+  const handleGoBack = () => {
     navigate(-1);
   };
 
@@ -189,18 +197,18 @@ export default function MyCommunityItems() {
       alert("You have items in this community. Please remove them first");
       return;
     } else {
-      try {
-        const { data } = await leaveCommunity({ variables: { communityId } });
-      } catch (error) {
-        console.error(error);
-      }
-
-      if (communityId) {
-        alert(`You are no longer following`);
-      } else if (!communityId) {
-        alert("Didn't successfully leave");
-      }
+    try {
+      const { data } = await leaveCommunity({ variables: { communityId } });
+    } catch (error) {
+      console.error(error);
     }
+
+    if (communityId) {
+      alert(`You are no longer following`);
+    } else if (!communityId) {
+      alert("Didn't successfully leave");
+    }
+  }
   };
 
   const handleSearchChange = (event) => {
@@ -213,25 +221,26 @@ export default function MyCommunityItems() {
       // checks for a matching value in the query's Communities.items.name values
       const itemInCommunity = data?.itemByCommunity.items.some(
         (name) => name.name === findItemValue
-      );
+      )
       const publicItem = data?.itemByCommunity.items.find(
         (item) => item.name === findItemValue
-      );
+      )
 
-      if (itemInCommunity === true && publicItem.isPublic === true) {
+      if (itemInCommunity === true && publicItem.isPublic === true ) {
         const item = data?.itemByCommunity.items.find(
           (name) => name.name === `${findItemValue}`
-        );
-        setRenderOneItem(item);
-      } else if (itemInCommunity === false || publicItem.isPublic === false) {
-        alert("Item not found or isn't public");
+        )
+        setRenderOneItem(item)
+      } else if (itemInCommunity === false || publicItem.isPublic === false ) {
+        alert("Item not found or isn't public")
       }
+      
     } catch (error) {
       console.log(error);
     }
   };
 
-   return (
+  return (
     <>
       <div className="flex w-full items-center h-fit">
         <Button action={handleGoBack} icon={`fa-solid fa-arrow-left`} />
@@ -275,9 +284,7 @@ export default function MyCommunityItems() {
         </div>
         <div className="w-full bg-white border-collapse">
 
-
-              
-         {renderOneItem  ? (
+          {renderOneItem  ? (
             <IndividualItem
               openMessageModal={openMessageModal}
               _id={renderOneItem._id}
@@ -325,4 +332,3 @@ export default function MyCommunityItems() {
     </>
   );
 }
-
