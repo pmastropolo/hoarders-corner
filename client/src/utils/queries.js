@@ -30,6 +30,8 @@ export const QUERY_COMMUNITIES = gql`
     communities {
       _id
       name
+      tagline
+      description
       items {
         _id
         name
@@ -45,10 +47,13 @@ export const QUERY_COMMUNITIES = gql`
   }
 `;
 
+
 export const QUERY_COMMUNITY = gql`
   query communityName($name: String!) {
     communityName(name: $name) {
       name
+      tagline
+      description
       _id
     }
   }
@@ -83,6 +88,8 @@ export const QUERY_MY_HOARDS = gql`
       communities {
         _id
         name
+        tagline
+        description
         items {
           ownerId {
             _id
@@ -92,6 +99,7 @@ export const QUERY_MY_HOARDS = gql`
     }
   }
 `;
+
 
 export const QUERY_MY_HOARD = gql`
   query myHoard($communityId: String!) {
@@ -111,11 +119,14 @@ export const QUERY_COMMUNITY_ITEMS = gql`
     itemByCommunity(communityId: $communityId) {
       _id
       name
+      tagline
+      description
       items {
         _id
         name
         description
         owner
+        imageUrl
         isPublic
         ownerId {
           _id
@@ -128,6 +139,7 @@ export const QUERY_COMMUNITY_ITEMS = gql`
   }
 `;
 
+
 export const QUERY_MY_COMMUNITIES = gql`
   query myCommunities {
     myCommunities {
@@ -136,6 +148,8 @@ export const QUERY_MY_COMMUNITIES = gql`
       communities {
         _id
         name
+        tagline
+        description
         items {
           _id
           isPublic
