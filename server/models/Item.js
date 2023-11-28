@@ -1,38 +1,43 @@
+// IMPORT MONGOOSE
 const mongoose = require("mongoose");
 
+// DESTRUCTURE SCHEMA FROM MONGOOSE
 const { Schema } = mongoose;
 
+// DEFINE ITEM SCHEMA
 const itemSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
+  name: {                         // NAME FIELD
+    type: String,                 // TYPE STRING
+    required: true,               // REQUIRED FIELD
+    trim: true,                   // TRIM WHITESPACE
   },
-  description: {
-    type: String,
+  description: {                  // DESCRIPTION FIELD
+    type: String,                 // TYPE STRING
   },
-  owner: {
-    type: String,
-    required: true,
-    // should it reference User and when creating a new one we can get the users
-    // username via token/context
-    // type: Schema.Types.ObjectId, ref: "User"
+  owner: {                        // OWNER FIELD
+    type: String,                 // TYPE STRING
+    required: true,               // REQUIRED FIELD
+    // REFERENCE USER OPTION COMMENTED
   },
-  isPublic: {
-    type: Boolean,
+  isPublic: {                     // PUBLIC STATUS FIELD
+    type: Boolean,                // TYPE BOOLEAN
   },
-  community: {
-    type: String,
-    required: true
+  community: {                    // COMMUNITY FIELD
+    type: String,                 // TYPE STRING
+    required: true                // REQUIRED FIELD
   },
-  imageUrl: {
-    type: String,
-    trim: true
+  imageUrl: {                     // IMAGE URL FIELD
+    type: String,                 // TYPE STRING
+    trim: true                    // TRIM WHITESPACE
   },
-
-  ownerId: {type: Schema.Types.ObjectId, ref: "User"},
+  ownerId: {                      // OWNER ID FIELD
+    type: Schema.Types.ObjectId,  // TYPE OBJECT ID
+    ref: "User"                   // REFERENCE USER MODEL
+  },
 });
 
+// CREATE ITEM MODEL
 const Item = mongoose.model("Item", itemSchema);
 
+// EXPORT ITEM MODEL
 module.exports = Item;
