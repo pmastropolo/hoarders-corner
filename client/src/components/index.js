@@ -1,3 +1,5 @@
+// THIS GOES INTO A FOLDER NAMED FileUpload
+
 // IMPORT REACT AND HOOKS
 import React, { useEffect, useRef, useState } from "react";
 
