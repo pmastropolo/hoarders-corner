@@ -25,6 +25,11 @@ const itemSchema = new Schema({
     type: String,
     required: true
   },
+  imageUrl: {
+    type: String,
+    trim: true
+  },
+
   ownerId: {type: Schema.Types.ObjectId, ref: "User"},
 });
 
