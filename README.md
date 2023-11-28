@@ -2,9 +2,9 @@
 
 ## Server Folder
 Added: 
-- aws-sdk (version ^2.1504.0) | npm install aws-sdk
-- dotenv (version ^16.3.1) | npm install dotenv
-- multer (version ^1.4.5-lts.1) | npm install multer
+- aws-sdk (version ^2.1504.0) | npm install aws-sdk | interacts with AWS services
+- dotenv (version ^16.3.1) | npm install dotenv | manages environment variables
+- multer (version ^1.4.5-lts.1) | npm install multer | handles file uploads in Node.js applications.
 
 ## .ENV File
 - AWS_ACCESS_KEY_ID=
