@@ -15,11 +15,7 @@ import FileUpload from "../FileUpload";
 import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
-// AWS Configuration  
-const bucketName = "our-group-project-last-one-three";                   // BUCKET NAME FOR AWS S3
-const accessKeyId = "AKIA3KMU7OYO4F4E7GDM";                              // AWS ACCESS KEY ID
-const secretAccessKey = "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";      // AWS SECRET ACCESS KEY
-const region = 'us-east-1';                                              // AWS REGION
+
 
 // INITIALIZE S3 CLIENT
 const client = new S3Client({ 
