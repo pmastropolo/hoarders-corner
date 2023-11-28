@@ -6,6 +6,10 @@ Server Folder:
 Added: aws-sdk (version ^2.1504.0), dotenv (version ^16.3.1), multer (version ^1.4.5-lts.1)
 npm install aws-sdk | npm install dotenv | npm install multer
 
+Client Folder:
+Added: @aws-sdk/client-s3 (version ^3.458.0), @aws-sdk/s3-request-presigner (version ^3.458.0)
+npm install @aws-sdk/client-s3 | npm install @aws-sdk/s3-request-presigner
+
 ![screenshot pt 1](https://github.com/pmastropolo/hoarders-corner/assets/135174286/2d835f68-dae7-4943-90f8-0e1414a50a2e)
 
 ![screenshot pt 2](https://github.com/pmastropolo/hoarders-corner/assets/135174286/740fd8b0-0e04-4a3b-9dbe-f91a22149bd0)
