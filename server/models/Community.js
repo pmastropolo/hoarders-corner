@@ -9,6 +9,9 @@ const communitySchema = new Schema({
     trim: true,
     unique: true,
   },
+  
+  tagline: { type: String, default: "" },
+  description: { type: String, default: "" },
   items: [{ type: Schema.Types.ObjectId, ref: "Item" }],
   users: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
