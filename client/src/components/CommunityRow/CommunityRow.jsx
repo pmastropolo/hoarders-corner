@@ -1,10 +1,10 @@
 import { useQuery, useMutation } from "@apollo/client"; // IMPORT APOLLO CLIENT HOOKS
-import Button from "../Atoms/Button"; // IMPORT BUTTON COMPONENT
+import Button from "../Atoms/Button";                   // IMPORT BUTTON COMPONENT
 import { LEAVE_COMMUNITY } from "../../utils/mutations"; // IMPORT LEAVE COMMUNITY MUTATION
 import {
   QUERY_MY_COMMUNITIES,
   QUERY_COMMUNITY_ITEMS,
-} from "../../utils/queries"; // IMPORT GRAPHQL QUERIES
+} from "../../utils/queries";                           // IMPORT GRAPHQL QUERIES
 
 import { Link } from "react-router-dom"; // IMPORT LINK COMPONENT FROM REACT ROUTER
 import Auth from "../../utils/auth"; // IMPORT AUTHENTICATION UTILS
@@ -56,7 +56,7 @@ const leaveCommunityAction = async (communityId, communityName) => { // ASYNC FU
   }
 };
 
-return (
+  return (
   <div className="community-row">
     <div className="communityRow w-full bg-neu-0 h-16 flex rounded-lg shadow-md hover:shadow-lg cursor-pointer ">
       <div className="px-6 flex flex-col justify-center w-full">
@@ -68,12 +68,7 @@ return (
           {description && <p className={`${classes.desc} desc`}>{description}</p>}
         </div>
       </div>
-     
-      <div className="flex items-center min-w-[128px] mr-2 tagline-container">
-        <p className="text-sm w-full tagline">{tagline}</p>
-
-      </div>
-      <div className="flex items-center min-w-[128px]">
+     <div className="flex items-center min-w-[128px]">
         <i className="fa-solid fa-users mr-1 text-pri-5 "></i>
         <h4 className="text-h4 font-bold">{members} Members</h4>
       </div>
