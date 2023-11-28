@@ -12,6 +12,8 @@ const typeDefs = `
  type Community {
    _id: ID
    name: String
+   tagline: String
+   description: String
    items: [Item]
    users: [User]
  }
@@ -24,7 +26,7 @@ const typeDefs = `
    isPublic: Boolean
    ownerId: User
    community: String
-
+   imageUrl: String
  }
 
  type Message {
@@ -68,11 +70,11 @@ const typeDefs = `
     createUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
 
-    addCommunity(name: String!): Community
+    addCommunity(name: String!, tagline: String, description: String): Community
     joinCommunity(communityId: ID!): Community
     leaveCommunity(communityId: ID!): User
 
-    createItem(name: String!, description: String!, owner: String!, isPublic: Boolean!, community: String!, communityId: String!): Item
+    createItem(name: String!, description: String!, owner: String!, isPublic: Boolean!, community: String!, communityId: String!, imageUrl: String): Item
     addItemToCommunity(itemId: ID!, communityId: ID!): Item
     updateItemPublic(itemId: String!): Item
     deleteItem(itemId: String!): Item
@@ -81,5 +83,4 @@ const typeDefs = `
     markMessageRead(_id: ID): Message
  }
 `;
-
 module.exports = typeDefs;
