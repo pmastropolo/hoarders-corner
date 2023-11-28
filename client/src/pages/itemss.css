@@ -1,0 +1,39 @@
+.each {
+        position: relative;
+        width: 100%;
+    }
+    
+    .image {
+        width: 100%;
+        cursor: pointer;
+        object-fit: cover;
+    }
+    
+    .description {
+        display: none;
+        transition: transform 0.25s ease-in-out;
+    }
+    
+    .image:hover + .description {
+        display: flex;
+    }
+    
+    .eachDesc {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.6);
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        opacity: 0;
+        transition: transform 0.25s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .each:hover .eachDesc {
+        opacity: 1;
+    }
