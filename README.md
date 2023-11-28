@@ -2,6 +2,9 @@
 
 ## Description
 
+Server Folder:
+Added: aws-sdk (version ^2.1504.0), dotenv (version ^16.3.1), multer (version ^1.4.5-lts.1)
+npm install aws-sdk | npm install dotenv | npm install multer
 
 ![screenshot pt 1](https://github.com/pmastropolo/hoarders-corner/assets/135174286/2d835f68-dae7-4943-90f8-0e1414a50a2e)
 
