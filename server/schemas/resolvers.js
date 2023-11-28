@@ -99,8 +99,8 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addCommunity: async (parent, { name }, context) => {
-      const newCommunity = await Community.create({ name });
+    addCommunity: async (parent, { name, tagline, description }, context) => {
+      const newCommunity = await Community.create({ name, tagline, description });
 
       const addToMyCommunities = await User.findByIdAndUpdate(
         context.user._id,
@@ -164,7 +164,7 @@ const resolvers = {
     },
     createItem: async (
       parent,
-      { name, description, owner, isPublic, community, communityId },
+      { name, description, owner, isPublic, community, communityId, imageUrl },
       context
     ) => {
       const newItem = await Item.create({
@@ -174,6 +174,7 @@ const resolvers = {
         isPublic,
         ownerId: context.user._id,
         community,
+        imageUrl,
       });
 
       await User.findByIdAndUpdate(context.user._id, {
@@ -212,3 +213,4 @@ const resolvers = {
 };
 
 module.exports = resolvers;
+
