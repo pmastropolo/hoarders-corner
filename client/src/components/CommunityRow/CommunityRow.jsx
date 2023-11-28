@@ -57,40 +57,44 @@ const leaveCommunityAction = async (communityId, communityName) => { // ASYNC FU
 };
 
 return (
-  <div className="w-full bg-neu-0 h-16 flex rounded-lg shadow-md hover:shadow-lg cursor-pointer "> // CONTAINER DIV
-    <div className="px-6 flex flex-col justify-center w-full"> // FLEX BOX FOR CONTENT
-      <div className={classes.overall}> // STYLED DIV FOR NAME AND DESCRIPTION
-        <Link className="flex items-center" to={`/communities/${_id}`}> // LINK TO COMMUNITY PAGE
-          <h3 className="text-h3 font-bold text-pri-5 mr-1">{name}</h3> // COMMUNITY NAME
-          <i className="fa-solid fa-arrow-right"></i> // ARROW ICON
-        </Link>
-        {description && <p className={classes.desc}>{description}</p>} // CONDITIONAL RENDERING OF DESCRIPTION
+  <div className="community-row">
+    <div className="communityRow w-full bg-neu-0 h-16 flex rounded-lg shadow-md hover:shadow-lg cursor-pointer ">
+      <div className="px-6 flex flex-col justify-center w-full">
+        <div className={classes.overall}>
+          <Link className="flex flex-col items-start" to={`/communities/${_id}`}>
+            <h3 className="text-h3 font-bold text-pri-5 mr-1">{name}</h3>
+            <p className="text-sm tagline">{tagline}</p> {/* Tagline right under the name */}
+          </Link>
+          {description && <p className={`${classes.desc} desc`}>{description}</p>}
+        </div>
+      </div>
+     
+      <div className="flex items-center min-w-[128px] mr-2 tagline-container">
+        <p className="text-sm w-full tagline">{tagline}</p>
+
+      </div>
+      <div className="flex items-center min-w-[128px]">
+        <i className="fa-solid fa-users mr-1 text-pri-5 "></i>
+        <h4 className="text-h4 font-bold">{members} Members</h4>
+      </div>
+      <div className="flex items-center min-w-[96px]">
+        <i className="fa-solid fa-tag mr-1 text-pri-5"></i>
+        <h4 className="text-h4 font-bold">{items} Items</h4>
+      </div>
+      <div className="flex px-6 items-center h-full">
+        {hasButton &&
+          (isMyCommunity ? (
+            <Button
+              label="Leave"
+              action={() => leaveCommunityAction(_id, name)}
+              style="warning"
+            />
+          ) : (
+            <Button label="Join" action={() => join(_id)} />
+          ))}
+          </div>
       </div>
     </div>
-    <div className="flex items-center min-w-[128px] mr-2"> // CONTAINER FOR TAGLINE
-      <p className="text-sm w-full">{tagline}</p> // DISPLAY TAGLINE
-    </div>
-    <div className="flex items-center min-w-[128px]"> // CONTAINER FOR MEMBERS INFO
-      <i className="fa-solid fa-users mr-1 text-pri-5 "></i> // USERS ICON
-      <h4 className="text-h4 font-bold">{members} Members</h4> // MEMBERS COUNT
-    </div>
-    <div className="flex items-center min-w-[96px]"> // CONTAINER FOR ITEMS INFO
-      <i className="fa-solid fa-tag mr-1 text-pri-5"></i> // TAG ICON
-      <h4 className="text-h4 font-bold">{items} Items</h4> // ITEMS COUNT
-    </div>
-    <div className="flex px-6 items-center h-full"> // CONTAINER FOR BUTTON
-      {hasButton &&
-        (isMyCommunity ? (
-          <Button
-            label="Leave"
-            action={() => leaveCommunityAction(_id, name)}
-            style="warning"
-          />
-        ) : (
-          <Button label="Join" action={() => join(_id)} />
-        ))}
-      {/* CONDITIONAL RENDERING FOR JOIN/LEAVE BUTTON */}
-    </div>
-  </div>
-);
+
+  );
 }
