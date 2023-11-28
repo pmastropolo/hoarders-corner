@@ -1,0 +1,73 @@
+/* DESCRIPTION SECTION*/
+
+/* DESCRIPTION */
+.desc {
+display: none;
+position: absolute;
+bottom: 0;
+left: 0;
+width: 100%;
+background-color: rgba(255, 255, 255, 0.9);
+padding: 10px;
+}
+
+/* SHOW DESCRIPTION ON HOVER IN COMMUNITY ROW */
+.communityRow:hover .desc {
+display: block;
+}
+
+
+
+
+/* COMMUNITY ROW */
+
+/* HOVER EFFECT FOR COMMUNITY ROW */
+.communityRow:hover {
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+     
+/* COMMUNITY ROW CONTAINER */
+.communityRow {
+position: relative;
+width: 100%;
+background-color: var(--bg-neu-0);
+flex: 1;
+border-radius: 10px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+cursor: pointer;
+padding: 20px;
+margin-bottom: 10px;
+ transition: box-shadow 0.3s ease;
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+
+
+
+
+/* TAGLINE SECTION */
+      
+/* TAGLINE CONTAINER */
+.tagline-container {
+min-width: 128px;
+margin-right: 10px;
+}
+
+/* SHOW TAGLINE ON HOVER IN COMMUNITY ROW */
+.community-row:hover .tagline {
+display: block;
+}
+             
+/* TAGLINE */
+.tagline {
+display: none;
+font-size: 12.9px;
+}
+             
+/* SHOW TAGLINE ON HOVER IN TAGLINE CONTAINER */
+.tagline-container:hover .tagline {
+display: block;
+}
+          
