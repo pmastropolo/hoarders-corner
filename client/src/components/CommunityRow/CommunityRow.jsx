@@ -8,6 +8,7 @@ import {
 
 import { Link } from "react-router-dom";
 import Auth from "../../utils/auth";
+import classes from "./communityrow.css";
 
 export default function CommunityRow({
   _id,
