@@ -14,9 +14,11 @@ export default function CommunityRow({
   name,
   members,
   items,
+  tagline,
   isMyCommunity,
   join,
   hasButton,
+  description,
 }) {
   const [leaveCommunity, { err }] = useMutation(LEAVE_COMMUNITY, {
     refetchQueries: [QUERY_MY_COMMUNITIES, "communities"],
@@ -53,12 +55,18 @@ export default function CommunityRow({
   };
 
   return (
-    <div className="w-full bg-neu-0 h-16 flex rounded-lg shadow-md hover:shadow-lg cursor-pointer">
-      <div className="px-6 flex items-center w-full">
-        <Link className="flex items-center" to={`/communities/${_id}`}>
-          <h3 className="text-h3 font-bold text-pri-5 mr-1">{name}</h3>
-          <i className="fa-solid fa-arrow-right"></i>
-        </Link>
+    <div className="w-full bg-neu-0 h-16 flex rounded-lg shadow-md hover:shadow-lg cursor-pointer ">
+      <div className="px-6 flex flex-col justify-center w-full">
+        <div className={classes.overall}>
+          <Link className="flex items-center" to={`/communities/${_id}`}>
+            <h3 className="text-h3 font-bold text-pri-5 mr-1">{name}</h3>
+            <i className="fa-solid fa-arrow-right"></i>
+          </Link>
+          {description && <p className={classes.desc}>{description}</p>}
+        </div>
+      </div>
+      <div className="flex items-center min-w-[128px] mr-2">
+        <p className="text-sm w-full">{tagline}</p>
       </div>
       <div className="flex items-center min-w-[128px]">
         <i className="fa-solid fa-users mr-1 text-pri-5 "></i>
