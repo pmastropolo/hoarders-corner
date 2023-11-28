@@ -77,38 +77,38 @@ const handleIsPublic = () => { // FUNCTION TO TOGGLE PUBLIC STATE
   setFormState({ ...formState, isPublic: !isPublic }); // UPDATE FORM STATE WITH NEW ISPUBLIC VALUE
 };
 
-  const createNewItem = async () => {
-    event.preventDefault();
-    let imageLink = "";
-    try {
-      if (file) {
-        console.log('File Exists');
-        const command = new PutObjectCommand({
-          Bucket: bucketName,
-          Key: file?.name,
-          Body: file,
-          ContentType: file.type
-        });
-        await client.send(command);
-        const itemCommand = new GetObjectCommand({ Bucket: bucketName, Key: file?.name });
-        imageLink = await getSignedUrl(client, itemCommand);
-      }
-      const { data } = await createItem({
-        variables: {
-          name: formState.name,
-          description: formState.description,
-          isPublic: formState.isPublic,
-          owner: Auth.getProfile().authenticatedPerson.username,
-          community: communityName,
-          communityId: communityId,
-          imageUrl: imageLink,
-        },
+const createNewItem = async () => {
+  event.preventDefault(); // PREVENT DEFAULT FORM SUBMISSION BEHAVIOR
+  let imageLink = ""; // INITIALIZE IMAGELINK VARIABLE
+  try {
+    if (file) { // CHECK IF FILE EXISTS
+      console.log('File Exists'); // LOG MESSAGE IF FILE EXISTS
+      const command = new PutObjectCommand({ // CREATE S3 PUT OBJECT COMMAND
+        Bucket: bucketName, // S3 BUCKET NAME
+        Key: file?.name, // FILE NAME AS S3 KEY
+        Body: file, // FILE BODY FOR UPLOAD
+        ContentType: file.type // SET CONTENT TYPE OF FILE
       });
-    } catch (error) {
-      console.error(error);
+      await client.send(command); // SEND COMMAND TO S3
+      const itemCommand = new GetObjectCommand({ Bucket: bucketName, Key: file?.name }); // CREATE S3 GET OBJECT COMMAND
+      imageLink = await getSignedUrl(client, itemCommand); // GET SIGNED URL FOR UPLOADED FILE
     }
-    closeModal();
-  };
+    const { data } = await createItem({ // CREATE NEW ITEM IN DATABASE
+      variables: {
+        name: formState.name, // ITEM NAME
+        description: formState.description, // ITEM DESCRIPTION
+        isPublic: formState.isPublic, // PUBLIC VISIBILITY FLAG
+        owner: Auth.getProfile().authenticatedPerson.username, // ITEM OWNER USERNAME
+        community: communityName, // COMMUNITY NAME
+        communityId: communityId, // COMMUNITY ID
+        imageUrl: imageLink, // IMAGE URL IF AVAILABLE
+      },
+    });
+  } catch (error) {
+    console.error(error); // LOG ANY ERRORS
+  }
+  closeModal(); // CLOSE MODAL AFTER OPERATION
+};
 
 return (
   <>
