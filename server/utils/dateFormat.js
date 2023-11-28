@@ -1,9 +1,11 @@
+// FUNCTION TO ADD SUFFIX TO DATE
 const addDateSuffix = (date) => {
   let dateStr = date.toString();
 
-  // get last char of date string
+  // GET LAST CHARACTER OF DATE STRING
   const lastChar = dateStr.charAt(dateStr.length - 1);
 
+  // ADD APPROPRIATE SUFFIX TO DATE
   if (lastChar === "1" && dateStr !== "11") {
     dateStr = `${dateStr}st`;
   } else if (lastChar === "2" && dateStr !== "12") {
@@ -17,12 +19,12 @@ const addDateSuffix = (date) => {
   return dateStr;
 };
 
-// function to format a timestamp, accepts the timestamp and an `options` object as parameters
+// FUNCTION TO FORMAT TIMESTAMP
 module.exports = (
   timestamp,
   { monthLength = "short", dateSuffix = true } = {}
 ) => {
-  // create month object
+  // DEFINE MONTHS OBJECT
   const months = {
     0: monthLength === "short" ? "Jan" : "January",
     1: monthLength === "short" ? "Feb" : "February",
@@ -38,29 +40,33 @@ module.exports = (
     11: monthLength === "short" ? "Dec" : "December",
   };
 
+  // CREATE DATE OBJECT FROM TIMESTAMP
   const dateObj = new Date(timestamp);
   const formattedMonth = months[dateObj.getMonth()];
 
+  // GET DAY OF MONTH WITH OR WITHOUT SUFFIX
   const dayOfMonth = dateSuffix
     ? addDateSuffix(dateObj.getDate())
     : dateObj.getDate();
 
+  // GET YEAR
   const year = dateObj.getFullYear();
-  let hour =
-    dateObj.getHours() > 12
-      ? Math.floor(dateObj.getHours() - 12)
-      : dateObj.getHours();
 
-  // if hour is 0 (12:00am), change it to 12
+  // FORMAT HOUR FOR 12-HOUR CLOCK
+  let hour = dateObj.getHours() > 12 ? Math.floor(dateObj.getHours() - 12) : dateObj.getHours();
+
+  // ADJUST FOR MIDNIGHT
   if (hour === 0) {
     hour = 12;
   }
 
+  // FORMAT MINUTES
   const minutes = (dateObj.getMinutes() < 10 ? "0" : "") + dateObj.getMinutes();
 
-  // set `am` or `pm`
+  // DETERMINE AM OR PM PERIOD
   const periodOfDay = dateObj.getHours() >= 12 ? "pm" : "am";
 
+  // BUILD AND RETURN FORMATTED TIMESTAMP
   const formattedTimeStamp = `${formattedMonth} ${dayOfMonth}, ${year} at ${hour}:${minutes} ${periodOfDay}`;
 
   return formattedTimeStamp;
