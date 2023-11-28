@@ -29,6 +29,8 @@ const styles = {
 export default function AllCommunities() {
   const [showModal, setShowModal] = useState(false);
   const [name, setInputValue] = useState("");
+  const [tagline, setTagline] = useState("");
+  const [description, setDescription] = useState("");
   const [findCommunityValue, setFindCommunity] = useState("");
 
   const { loading, data, error } = useQuery(QUERY_COMMUNITIES);
@@ -73,6 +75,18 @@ export default function AllCommunities() {
     setInputValue(event.target.value);
   };
 
+  const handleChangeTagline = (event) => {
+    event.preventDefault();
+    setTagline(event.target.value);
+  };
+
+  const handleChangeDescription = (event) => {
+    event.preventDefault();
+    setDescription(event.target.value);
+  };
+
+
+
   const handleSearchChange = (event) => {
     event.preventDefault();
     setFindCommunity(event.target.value);
@@ -83,7 +97,7 @@ export default function AllCommunities() {
   const submitCommunityForm = async (event) => {
     try {
       const { data } = await addCommunity({
-        variables: { name },
+        variables: { name, tagline, description },
       });
     } catch (addCommunityError) {
       console.log(addCommunityError);
@@ -95,6 +109,7 @@ export default function AllCommunities() {
     if (data) {
       setShowModal(false);
       setInputValue("");
+      setTagline("");
     } else {
       console.log("didn't create community");
     }
@@ -137,69 +152,77 @@ export default function AllCommunities() {
 
   return (
     <div className="container">
-      <div className="scroll-smooth sticky top-0 bg-neu-2  ">
-        <PageHeader
-          icon={"fa-solid fa-users"}
-          label="All Communities"
-          hasButton={isLogged && true}
-          btnLabel={"Create Community"}
-          btnAction={handleCreateCommunity}
+      <PageHeader
+        icon={"fa-solid fa-users"}
+        label="All Communities"
+        hasButton={isLogged && true}
+        btnLabel={"Create Community"}
+        btnAction={handleCreateCommunity}
+      />
+      <div className="w-full mt-2">
+        <SearchBar
+          bType={"submit"}
+          btnAction={searchForCommunity}
+          body={
+            <input
+              type="text"
+              placeholder="Find a Community"
+              value={findCommunityValue}
+              onChange={handleSearchChange}
+              className="w-100 h-7 pl-10 text-left"
+            />
+          }
         />
-        <div className="w-full mt-2">
-          <SearchBar
-            bType={"submit"}
-            btnAction={searchForCommunity}
-            searchFieldLabel={"Find a Community"}
-            change={handleSearchChange}
-            value={findCommunityValue}
-          />
+        <div className="flex flex-col gap-4">
+          {communities.map((c, i) => (
+            <CommunityRow
+              key={i}
+              _id={c._id}
+              name={c.name}
+              members={c.users.length}
+              description={c.description}
+              items={c.items.filter((i) => i.isPublic).length}
+              join={joinCommunityAction}
+              hasButton={isLogged === true}
+              tagline={c.tagline}
+              isMyCommunity={c.users.some((user) => user._id === myUserId)}
+            />
+          ))}
+          {showModal && (
+            <Modal
+              heading={"Create A Community"}
+              body={
+                <div className="flex flex-col gap-1">
+                  <input
+                    type="text"
+                    placeholder="Title it here"
+                    value={name}
+                    className="px-3 py-2"
+                    onChange={handleInputChange}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Enter Description"
+                    value={description}
+                    className="px-3 py-2"
+                    onChange={handleChangeDescription}
+                  />
+                  <textarea
+                    type="text"
+                    placeholder="Enter Tagline"
+                    multiple
+                    className="px-3 py-2"
+                    value={tagline}
+                    onChange={handleChangeTagline}
+                  />
+                </div>
+              }
+              btnLabel={"Create"}
+              btnAction={() => submitCommunityForm()}
+              closeModal={() => setShowModal(false)}
+            />
+          )}
         </div>
-      </div>
-      <div className="lg:flex lg:flex-col gap-4 grid sm:grid-cols-2 grid-cols-1">
-        {communities.map((c, i) => (
-          <>
-            <div className="hidden lg:flex lg:flex-col">
-              <CommunityRow
-                key={i}
-                _id={c._id}
-                name={c.name}
-                members={c.users.length}
-                items={c.items.filter((i) => i.isPublic).length}
-                join={joinCommunityAction}
-                hasButton={isLogged === true}
-                isMyCommunity={c.users.some((user) => user._id === myUserId)}
-              />
-            </div>
-            <div className="lg:hidden">
-              <ResCommunityCard
-                key={i}
-                _id={c._id}
-                name={c.name}
-                members={c.users.length}
-                items={c.items.filter((i) => i.isPublic).length}
-                join={joinCommunityAction}
-                hasButton={isLogged === true}
-                isMyCommunity={c.users.some((user) => user._id === myUserId)}
-              />
-            </div>
-          </>
-        ))}
-        {showModal && (
-          <Modal
-            heading={"Create A Community"}
-            body={
-              <input
-                type="text"
-                placeholder="Title it here"
-                value={name}
-                onChange={handleInputChange}
-              />
-            }
-            btnLabel={"Create"}
-            btnAction={() => submitCommunityForm()}
-            closeModal={() => setShowModal(false)}
-          />
-        )}
       </div>
     </div>
   );
