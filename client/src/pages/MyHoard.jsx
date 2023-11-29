@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";   // Importing useQuery and useMutation from @apollo/client
 import { useParams } from "react-router-dom";
 import { QUERY_MY_HOARD } from "../utils/queries";
 import PageHeader from "../components/Atoms/PageHeader";
