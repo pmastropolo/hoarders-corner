@@ -77,17 +77,8 @@ function SectionLabel({ label }) {
   );
 }
 
-function NavLink({ to, label, refetch }) {
+function NavLink({ to, label }) {
   const currentPage = useLocation().pathname;
-  const { loading, data, error } = useQuery(QUERY_COMMUNITIES);
-  // const { loading, data, error } = useQuery(QUERY_MY_COMMUNITIES);
-
-
-  const handleClick = () => {
-    if (refetch) {
-      refetch();
-    }
-  };
 
   return (
     <div className="h-10 ">
@@ -98,7 +89,6 @@ function NavLink({ to, label, refetch }) {
             : "text-neu-7 "
         }`}
         to={to}
-        onClick={handleClick}
       >
         {label}
       </Link>
@@ -106,29 +96,19 @@ function NavLink({ to, label, refetch }) {
   );
 }
 
-export default function LeftNav({ hasHeader }) {
+export default function LeftNav() {
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
   };
 
-  const { refetch } = useQuery(QUERY_COMMUNITIES);
-  const { refetch: myCommsRefetch} = useQuery(QUERY_MY_COMMUNITIES);
-  
   return (
-    < >
-    <div className="container h-full">
-    <div className="scroll-smooth sticky top-0 bg-neu-2 ">
-      
-      <div className="bg-neu-0 h-full min-w-[290px] max-w-[290px] ">
-
-        {hasHeader && (
-          <div className="h-14 bg-opac-pri flex px-4 py-4 items-center ">
-            <i className="fa-solid fa-box text-h3 text-pri-5 mr-2"></i>
-            <h2 className="text-h2 font-bold text-neu-9">Hoarder's Corner</h2>
-          </div>
-        )}
-
+    <>
+      <div className={`bg-neu-0 h-full min-w-[290px] max-w-[290px]`}>
+        <div className="h-14 bg-opac-pri flex px-4 py-4 items-center">
+          <i className="fa-solid fa-box text-h3 text-pri-5 mr-2"></i>
+          <h2 className="text-h2 font-bold text-neu-9">Hoarder's Corner</h2>
+        </div>
         {Auth.loggedIn() ? (
           <div
             className="h-full flex flex-col"
@@ -137,8 +117,8 @@ export default function LeftNav({ hasHeader }) {
             <div className="flex-grow overflow-auto">
               <MessagesTab />
               <SectionLabel label="Communities" />
-              <NavLink label="All Communities" to="/" refetch={refetch} />
-              <NavLink label="My Communities" to="/my-communities" refetch={myCommsRefetch} />
+              <NavLink label="All Communities" to="/" />
+              <NavLink label="My Communities" to="/my-communities" />
               <MyHoards />
             </div>
             <div className="w-full bg-neu-0 px-4 py-2 border-t-2 border-opac-neu flex-shrink">
@@ -146,13 +126,11 @@ export default function LeftNav({ hasHeader }) {
             </div>
           </div>
         ) : (
-          <div id="left-nav-login">
+          <div>
             <LoginForm />
             <SignupForm />
           </div>
         )}
-      </div>
-      </div>
       </div>
     </>
   );
