@@ -27,7 +27,7 @@ export default function Input({ label, type, name, value, change, warning }) {
   return (
     <div>
       <label
-        className={` pointer-events-none transition duration-300  text-med mb-1 p-1 w-fit absolute ml-3 ${
+        className={` transition duration-300  text-med mb-1 p-1 w-fit absolute ml-3 ${
           isFocused || hasValue
             ? "-translate-y-[10px] bg-neu-0 text-pri-5"
             : `translate-y-[8px] text-neu-6`
