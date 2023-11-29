@@ -4,6 +4,9 @@
 
 https://www.youtube.com/watch?v=jDqNtpYQiP0
 
+![youtube img](https://github.com/pmastropolo/hoarders-corner/assets/135174286/93f185a4-7582-4f9d-bb9c-17377c80d3d8)
+
+
 ## Server Folder
 Added: 
 - aws-sdk (version ^2.1504.0) | npm install aws-sdk | interacts with AWS services
