@@ -1,5 +1,9 @@
 # Hoarder's Corner
 
+## Youtube Video Preview Link
+
+https://www.youtube.com/watch?v=jDqNtpYQiP0
+
 ## Server Folder
 Added: 
 - aws-sdk (version ^2.1504.0) | npm install aws-sdk | interacts with AWS services
