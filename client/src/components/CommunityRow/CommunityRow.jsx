@@ -1,14 +1,14 @@
-import { useQuery, useMutation } from "@apollo/client";
-import Button from "../Atoms/Button";
-import { LEAVE_COMMUNITY } from "../../utils/mutations";
+import { useQuery, useMutation } from "@apollo/client"; // Import Apollo Client hooks
+import Button from "../Atoms/Button"; // Import Button component
+import { LEAVE_COMMUNITY } from "../../utils/mutations"; // Import leave community mutation
 import {
   QUERY_MY_COMMUNITIES,
   QUERY_COMMUNITY_ITEMS,
 } from "../../utils/queries";
 
-import { Link } from "react-router-dom";
-import Auth from "../../utils/auth";
-import classes from "./communityrow.css";
+import { Link } from "react-router-dom"; 
+import Auth from "../../utils/auth";  // import auth utils
+import classes from "./communityrow.css";  // Import Css
 
 export default function CommunityRow({
   _id,
@@ -22,15 +22,18 @@ export default function CommunityRow({
   description,
 }) {
 
-
+  // Leave community mutation with refetch
   const [leaveCommunity, { err }] = useMutation(LEAVE_COMMUNITY, {
     refetchQueries: [QUERY_MY_COMMUNITIES, "communities"],
   });
+  
+  // Query community items with community ID
   const communityId = _id;
   const { loading, data, error } = useQuery(QUERY_COMMUNITY_ITEMS, {
     variables: { communityId: communityId },
   });
 
+  // Filter community items by logged in user
   const myCommunityItems =
     (Auth.loggedIn() &&
       data?.itemByCommunity.items.filter(
@@ -38,6 +41,7 @@ export default function CommunityRow({
       )) ||
     [];
 
+  // Async function to leave community
   const leaveCommunityAction = async (communityId, communityName) => {
     if (myCommunityItems.length > 0) {
       alert("You have items in this community. Please remove them first");
@@ -46,13 +50,14 @@ export default function CommunityRow({
       try {
         const { data } = await leaveCommunity({ variables: { communityId } });
       } catch (error) {
-        console.error(error);
+        console.error(error);  // Log error to console
       }
 
+      // If community ID exists
       if (communityId) {
         alert(`You are no longer following ${communityName}`);
       } else if (!communityId) {
-        alert("Didn't successfully leave");
+        alert("Didn't successfully leave");  // Log error to Console
       }
     }
   };
