@@ -47,7 +47,7 @@ export default function MobileNav() {
             !showNav && "-left-[290px]" // CONDITIONAL STYLING FOR NAV VISIBILITY
           }`}
         >
-          <LeftNav /> // LEFT NAV COMPONENT
+          <LeftNav /> 
         </div>
       </OutsideClickHandler>
     </>
