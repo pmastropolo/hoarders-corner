@@ -50,28 +50,28 @@ const leaveCommunityAction = async (communityId, communityName) => { // ASYNC FU
 };
   
 return (
-  <div className="w-full bg-neu-0 rounded-lg shadow-md p-6"> // CARD CONTAINER WITH STYLING
-    <Link className="flex gap-4 items-center mb-4" to={`/communities/${_id}`}> // LINK TO COMMUNITY DETAILS
-      <h3 className="text-h3 font-bold text-pri-5">{name}</h3> // DISPLAY COMMUNITY NAME
-      <i className="fa-solid fa-arrow-right"></i> // RIGHT ARROW ICON
+  <div className="w-full bg-neu-0 rounded-lg shadow-md p-6"> 
+    <Link className="flex gap-4 items-center mb-4" to={`/communities/${_id}`}> 
+      <h3 className="text-h3 font-bold text-pri-5">{name}</h3> 
+      <i className="fa-solid fa-arrow-right"></i> 
     </Link>
-    <div className="flex items-center min-w-[128px] mb-3"> // MEMBERS INFO CONTAINER
-      <i className="fa-solid fa-users mr-1 text-pri-5 "></i> // USERS ICON
-      <h4 className="text-h4 font-bold">{members} Members</h4> // DISPLAY NUMBER OF MEMBERS
+    <div className="flex items-center min-w-[128px] mb-3"> 
+      <i className="fa-solid fa-users mr-1 text-pri-5 "></i> 
+      <h4 className="text-h4 font-bold">{members} Members</h4> 
     </div>
-    <div className="flex items-center min-w-[96px] mb-3"> // ITEMS INFO CONTAINER
-      <i className="fa-solid fa-tag mr-1 text-pri-5"></i> // TAG ICON
-      <h4 className="text-h4 font-bold">{items} Items</h4> // DISPLAY NUMBER OF ITEMS
+    <div className="flex items-center min-w-[96px] mb-3"> 
+      <i className="fa-solid fa-tag mr-1 text-pri-5"></i> 
+      <h4 className="text-h4 font-bold">{items} Items</h4> 
     </div>
     {hasButton &&
       (isMyCommunity ? (
         <Button
           label="Leave"
           action={() => leaveCommunityAction(_id, name)}
-          style="warning" // CONDITIONAL BUTTON FOR LEAVING COMMUNITY
+          style="warning" 
         />
       ) : (
-        <Button label="Join" action={() => join(_id)} /> // CONDITIONAL BUTTON FOR JOINING COMMUNITY
+        <Button label="Join" action={() => join(_id)} /> 
       ))}
   </div>
 );
