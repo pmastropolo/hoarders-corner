@@ -14,16 +14,16 @@ export default function SearchBar({
   value, // PROP: VALUE OF THE INPUT FIELD
 }) {
   return (
-    <div className="flex mb-4 "> // SEARCH BAR CONTAINER WITH STYLING
-      <div className="mr-2"> // CONTAINER FOR INPUT FIELD
+    <div className="flex mb-4 "> 
+      <div className="mr-2"> 
         <Input
-          label={searchFieldLabel} // INPUT FIELD LABEL
-          change={change} // HANDLE INPUT CHANGE
-          type={"text"} // SET INPUT TYPE TO TEXT
-          value={value} // BIND INPUT VALUE
+          label={searchFieldLabel} 
+          change={change} 
+          type={"text"} 
+          value={value} 
         />
       </div>
-      <Button label="Search" action={btnAction} type={bType} /> // SEARCH BUTTON
+      <Button label="Search" action={btnAction} type={bType} /> 
     </div>
   );
 }
