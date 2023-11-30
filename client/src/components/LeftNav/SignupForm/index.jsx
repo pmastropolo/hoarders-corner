@@ -40,46 +40,46 @@ const handleFormSubmit = async (event) => { // ASYNC FUNCTION TO HANDLE FORM SUB
 
 return (
   <div>
-    {data ? ( // CHECK IF USER IS SIGNED UP
+    {data ? ( 
       <h2>
-        You are signed up! <Link to="/">Back to Home</Link> // DISPLAY SIGNUP SUCCESS MESSAGE AND LINK TO HOME
+        You are signed up! <Link to="/">Back to Home</Link> 
       </h2>
     ) : (
-      <div className="px-4"> // SIGNUP FORM CONTAINER
+      <div className="px-4"> 
         <form
-          onSubmit={handleFormSubmit} // SET FORM SUBMIT HANDLER
+          onSubmit={handleFormSubmit} 
           className={`flex flex-col gap-4 mt-6`}
         >
-          <h4 className="text-h4 font-medium ">Sign Up</h4> // SIGN UP HEADER
+          <h4 className="text-h4 font-medium ">Sign Up</h4> 
 
           <Input
-            label="Username" // USERNAME INPUT FIELD
+            label="Username"
             type="text"
             name="username"
             value={formState.username}
             change={handleFormChange}
           />
           <Input
-            label="Email" // EMAIL INPUT FIELD
+            label="Email"
             type="email"
             name="email"
             value={formState.email}
             change={handleFormChange}
           />
           <Input
-            label="Password" // PASSWORD INPUT FIELD
+            label="Password"
             type="password"
             name="password"
             value={formState.password}
             change={handleFormChange}
           />
 
-          <Button label="Sign Up" type="submit" /> // SIGN UP BUTTON
+          <Button label="Sign Up" type="submit" /> 
         </form>
       </div>
     )}
 
-    {error && <div>{error.message}</div>} // DISPLAY ANY ERROR MESSAGES
+    {error && <div>{error.message}</div>} 
   </div>
 );
 }
