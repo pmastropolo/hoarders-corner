@@ -38,20 +38,20 @@ const handleFormSubmit = async (event) => { // FUNCTION TO HANDLE FORM SUBMISSIO
 return (
   <>
     <div id="login-card ">
-      {data ? ( // CHECK IF USER IS LOGGED IN
+      {data ? ( 
         <h2>
-          You are logged in!<Link to="/">Back to Home</Link> // DISPLAY LOGGED IN MESSAGE AND LINK TO HOME
+          You are logged in!<Link to="/">Back to Home</Link> 
         </h2>
       ) : (
-        <div className="px-4"> // LOGIN FORM CONTAINER
+        <div className="px-4"> 
           <form
-            onSubmit={handleFormSubmit} // SET FORM SUBMIT HANDLER
+            onSubmit={handleFormSubmit} 
             className="flex flex-col gap-4 border-b-2 border-opac-neu pb-4  "
           >
-            <h4 className="text-h4 font-medium mt-4">Login</h4> // LOGIN HEADER
+            <h4 className="text-h4 font-medium mt-4">Login</h4> 
 
             <Input
-              label="Email" // EMAIL INPUT FIELD
+              label="Email" 
               type="email"
               name="email"
               value={formState.email}
@@ -59,18 +59,18 @@ return (
             />
 
             <Input
-              label="Password" // PASSWORD INPUT FIELD
+              label="Password" 
               type="password"
               name="password"
               value={formState.password}
               change={handleFormChange}
             />
-            <Button label="Login" type="submit" /> // LOGIN BUTTON
+            <Button label="Login" type="submit" /> 
           </form>
         </div>
       )}
 
-      {error && <div>{error.message}</div>} // DISPLAY ANY ERROR MESSAGES
+      {error && <div>{error.message}</div>} 
     </div>
   </>
 );
