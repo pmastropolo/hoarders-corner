@@ -1,33 +1,39 @@
+// IMPORT MONGOOSE
 const mongoose = require("mongoose");
+
+// IMPORT DATE FORMAT UTILITY
 const dateFormat = require("../utils/dateFormat");
+
+// DESTRUCTURE SCHEMA FROM MONGOOSE
 const { Schema } = mongoose;
 
+// DEFINE MESSAGE SCHEMA
 const messageSchema = new Schema(
   {
-    recipient: {
+    recipient: {            // RECIPIENT FIELD
       type: String,
     },
-    sender: {
+    sender: {               // SENDER FIELD
       type: String,
     },
-    content: {
+    content: {              // CONTENT FIELD
       type: String,
     },
-    isRead: {
+    isRead: {               // READ STATUS FIELD
       type: Boolean,
-      default: false,
+      default: false,       // DEFAULT VALUE
     },
-    createdAt: {
+    createdAt: {            // CREATED AT FIELD
       type: Date,
-      default: Date.now,
-      get: (timestamp) => dateFormat(timestamp),
+      default: Date.now,    // DEFAULT CURRENT DATE
+      get: (timestamp) => dateFormat(timestamp), // FORMAT TIMESTAMP
     },
   }
-  // {
-  //   timestamps: true, // gets the createdAt date
-  // }
+  // OPTIONAL TIMESTAMP SETTINGS COMMENTED OUT
 );
 
+// CREATE MESSAGE MODEL
 const Message = mongoose.model("Message", messageSchema);
 
+// EXPORT MESSAGE MODEL
 module.exports = Message;

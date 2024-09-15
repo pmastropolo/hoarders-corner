@@ -20,19 +20,43 @@ import PageHeader from "../components/Atoms/PageHeader";
 import CreateItemForm from "../components/CreateItemForm/CreateItemForm";
 import { Link } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
+import classes from "./itemss.css";
 
-function IndividualItem({ name, description, owner, _id, openMessageModal }) {
+function IndividualItem({ name, description, owner, _id, openMessageModal, imageUrl }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const descriptionStyle = {
+    display: isHovered ? 'block' : 'none', 
+  };
+
   return (
-    <div className="border-b-[1px] border-opac-neu  py-2  flex w-full">
-      <div className="flex min-w-[204px] px-6 py-3">{name}</div>
-      <div className="flex w-full px-6 py-3">{description}</div>
-      <div className="flex min-w-[204px] text-left px-6 py-3">{owner}</div>
-      <div className="flex min-w-[184px] justify-end py-3 px-6">
+    <div className="border-x border-y rounded-lg shadow-lg border-b-[1px] border-opac-neu py-2 px-4 flex flex-col w-4/12" style={{ width: '30%' }}>
+      <div className="px-1 py-1">
+        <h1 className="text-h2 font-bold mb-1">{name}</h1>
+        <div style={{ width: '100%', height: '2px', backgroundColor: 'black' }} />
+        <p className="text-sm mt-1" style={{ marginTop: '2px' }}>Owned By {owner}</p>
+      </div>
+      <div className="flex flex-col w-full h-full py-3" style={{ position: 'relative' }}>
+        {!imageUrl && <p>{description}</p>}
+        {imageUrl && <>
+          <img 
+            src={imageUrl} 
+            alt={name} 
+            className={classes.image} 
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          />
+          {description && <p style={descriptionStyle}>{description}</p>}
+        </>}
+      </div>
+      <div className="flex w-full py-3">
         <Button label="Message Owner" action={() => openMessageModal(owner)} />
       </div>
     </div>
   );
 }
+
+
 
 function MessageModal({ name, closeModal }) {
   const [textAreaValue, setTextAreaValue] = useState("");
@@ -118,6 +142,8 @@ export default function MyCommunityItems() {
   const { loading, data, error } = useQuery(QUERY_COMMUNITY_ITEMS, {
     variables: { communityId: communityId },
   });
+  
+
 
   if (loading) return <p>Loading..</p>;
   if (error) return <p>Error</p>;
@@ -127,12 +153,13 @@ export default function MyCommunityItems() {
   const joinedCommunity = data?.itemByCommunity.users.some(
     (user) => user._id === Auth.getProfile().authenticatedPerson._id
   );
+ 
+  const myCommunityItems= data?.itemByCommunity.items.filter( (item) => item.owner === Auth.getProfile().authenticatedPerson.username);
 
-  const myCommunityItems = data?.itemByCommunity.items.filter(
-    (item) => item.owner === Auth.getProfile().authenticatedPerson.username
-  );
+ 
 
-    const handleGoBack = () => {
+
+  const handleGoBack = () => {
     navigate(-1);
   };
 
@@ -177,18 +204,18 @@ export default function MyCommunityItems() {
       alert("You have items in this community. Please remove them first");
       return;
     } else {
-      try {
-        const { data } = await leaveCommunity({ variables: { communityId } });
-      } catch (error) {
-        console.error(error);
-      }
-
-      if (communityId) {
-        alert(`You are no longer following`);
-      } else if (!communityId) {
-        alert("Didn't successfully leave");
-      }
+    try {
+      const { data } = await leaveCommunity({ variables: { communityId } });
+    } catch (error) {
+      console.error(error);
     }
+
+    if (communityId) {
+      alert(`You are no longer following`);
+    } else if (!communityId) {
+      alert("Didn't successfully leave");
+    }
+  }
   };
 
   const handleSearchChange = (event) => {
@@ -201,122 +228,104 @@ export default function MyCommunityItems() {
       // checks for a matching value in the query's Communities.items.name values
       const itemInCommunity = data?.itemByCommunity.items.some(
         (name) => name.name === findItemValue
-      );
+      )
       const publicItem = data?.itemByCommunity.items.find(
         (item) => item.name === findItemValue
-      );
+      )
 
-      if (itemInCommunity === true && publicItem.isPublic === true) {
+      if (itemInCommunity === true && publicItem.isPublic === true ) {
         const item = data?.itemByCommunity.items.find(
           (name) => name.name === `${findItemValue}`
-        );
-        setRenderOneItem(item);
-      } else if (itemInCommunity === false || publicItem.isPublic === false) {
-        alert("Item not found or isn't public");
+        )
+        setRenderOneItem(item)
+      } else if (itemInCommunity === false || publicItem.isPublic === false ) {
+        alert("Item not found or isn't public")
       }
+      
     } catch (error) {
       console.log(error);
     }
   };
 
+  
+
   return (
     <>
-
-    
-      <div className="scroll-smooth sticky top-0 bg-neu-2 ">
-        <div className="flex w-full items-center h-fit ">
-          <Button action={handleGoBack} icon={`fa-solid fa-arrow-left`} />
-          {/* <Button icon={`fa-solid fa-arrow-left`} /> */}
-          <PageHeader
-            label={`${data.itemByCommunity.name}`}
-            icon={"fa-solid fa-users"}
-            hasButton={joinedCommunity}
-            btnLabel={`Add Item`}
-            btnAction={openCreateItemModal}
-          />
-          <div className="ml-4">
-            {joinedCommunity ? (
-              <Button
-                label={`Leave`}
-                style={"warning"}
-                action={() => leaveCommunityAction(communityId)}
-              />
-            ) : (
-                <Button
-                  label={"Join"}
-                  action={() => joinCommunityAction(communityId)}
-                />
-              )}
-            </div>
-            
+      <div className="flex w-full items-center h-fit">
+        <Button action={handleGoBack} icon={`fa-solid fa-arrow-left`} />
+        <PageHeader
+          label={`${data.itemByCommunity.name} ${data.itemByCommunity.tagline ? "#" : ""}${data.itemByCommunity.tagline}`}
+          hasButton={joinedCommunity}
+          btnLabel={`Add Item`}
+          btnAction={openCreateItemModal}
+        />
+        <div className="ml-4">
+          {joinedCommunity ? (
+            <Button
+              label={`Leave`}
+              style={"warning"}
+              action={() => leaveCommunityAction(communityId)}
+            />
+          ) : (
+            <Button
+              label={"Join"}
+              action={() => joinCommunityAction(communityId)}
+            />
+          )}
         </div>
-        <div >
-          <SearchBar
-            bType={"submit"}
-            btnAction={searchForItem}
-            searchFieldLabel={"Find an Item"}
-            change={handleSearchChange}
-            value={findItemValue}
-          />
-        </div>
-    </div>
-      
+      </div>
 
-      {myCommunityItems.length === 0 ? (
-        <p>There are no items in this community</p>
-      ) : (
-        <>
-          <div className=" relative w-full">
-            <div className="w-full  rounded-lg w-full shadow-lg border-b-[1px] border-opac-neu bg-white border-collapse bg-neu-0">
-              <div className="text-neu-7 h-10  border-b-[1px] border-opac-neu ">
-                <div className="flex font-bold">
-                  <div className="min-w-[204px] text-left px-6 py-1.5">
-                    Name
-                  </div>
-                  <div className="w-full text-left px-6 py-1.5">
-                    Description
-                  </div>
-                  <div className="min-w-[204px] text-left px-6 py-1.5">
-                    Owner
-                  </div>
-                  <div className="min-w-[184px] text-right text-neu-7 px-6 py-3 py-1.5">
-                    Message Owner
-                  </div>
-                </div>
-              </div>
-              {renderOneItem ? (
-                <IndividualItem
-                  openMessageModal={openMessageModal}
-                  _id={renderOneItem._id}
-                  name={renderOneItem.name}
-                  description={renderOneItem.description}
-                  owner={renderOneItem.owner}
-                />
-              ) : communityItems.length === 0 ? (
-                <p className="border font-bold py-2 px-4 flex w-full text-center">
-                  No items in this community
-                </p>
-              ) : (
-                <div>
-                  {communityItems.map(
-                    (item, index) =>
-                      item.isPublic && (
-                        <IndividualItem
-                          openMessageModal={openMessageModal}
-                          _id={item._id}
-                          name={item.name}
-                          description={item.description}
-                          owner={item.owner}
-                          key={index}
-                        />
-                      )
-                  )}
-                </div>
-              )}
-            </div>
+      <div className="p-8 overflow-auto relative w-full">
+        <div>
+        <SearchBar
+          bType={"submit"}
+          btnAction={searchForItem}
+          body={
+            <input
+              type="text"
+              placeholder="Find an Item"
+              value={findItemValue}
+              onChange={handleSearchChange}
+              className="w-100 h-7 pl-10 text-left"
+            />
+          }
+        />
+        </div>
+        <div className="w-full bg-white border-collapse">
+
+          {renderOneItem  ? (
+            <IndividualItem
+              openMessageModal={openMessageModal}
+              _id={renderOneItem._id}
+              name={renderOneItem.name}
+              description={renderOneItem.description}
+              owner={renderOneItem.owner}
+              imageUrl={renderOneItem.imageUrl}
+            />
+          ) : (
+          communityItems.length === 0 ? ( 
+            <p className="border font-bold py-2 px-4 flex w-full text-center">No items in this community</p>
+          ) : (
+          <div className="flex flex-wrap gap-1">
+            {communityItems.map(
+              (item, index) =>
+                item.isPublic && (
+                  <IndividualItem
+                    openMessageModal={openMessageModal}
+                    _id={item._id}
+                    name={item.name}
+                    description={item.description}
+                    owner={item.owner}
+                    key={index}
+                    imageUrl={item.imageUrl}
+                  />
+                )
+            )}
           </div>
-        </>
-      )}
+          )
+          )}
+        </div>
+      </div>
 
       {messageModalState && (
         <MessageModal name={messageModalData} closeModal={closeMessageModal} />
@@ -329,7 +338,6 @@ export default function MyCommunityItems() {
           communityId={communityId}
         />
       )}
-      
     </>
   );
 }

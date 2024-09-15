@@ -1,5 +1,38 @@
 # Hoarder's Corner
 
+## Youtube Video Preview Link
+
+https://www.youtube.com/watch?v=jDqNtpYQiP0
+
+![youtube img](https://github.com/pmastropolo/hoarders-corner/assets/135174286/93f185a4-7582-4f9d-bb9c-17377c80d3d8)
+
+
+## Server Folder
+Added: 
+- aws-sdk (version ^2.1504.0) | npm install aws-sdk | interacts with AWS services
+- dotenv (version ^16.3.1) | npm install dotenv | manages environment variables
+- multer (version ^1.4.5-lts.1) | npm install multer | handles file uploads in Node.js applications.
+
+## .ENV File
+- AWS_ACCESS_KEY_ID=
+- AWS_SECRET_ACCESS_KEY=
+- AWS_REGION=us-east-1
+
+## Client Folder
+Added: 
+- @aws-sdk/client-s3 (version ^3.458.0) | npm install @aws-sdk/client-s3 | Manage files in Amazon S3 Storage
+- @aws-sdk/s3-request-presigner (version ^3.458.0) | npm install @aws-sdk/s3-request-presigner | Creates special temporary links for secure file sharing without exposing your AWS credentials.
+
+## Bucket Screenshots
+
+![screenshot pt 1](https://github.com/pmastropolo/hoarders-corner/assets/135174286/2d835f68-dae7-4943-90f8-0e1414a50a2e)
+
+![screenshot pt 2](https://github.com/pmastropolo/hoarders-corner/assets/135174286/740fd8b0-0e04-4a3b-9dbe-f91a22149bd0)
+
+![screenshot pt 3](https://github.com/pmastropolo/hoarders-corner/assets/135174286/0c0ff46a-922b-4bd6-a16e-57aa55175918)
+
+![screenshot pt 4](https://github.com/pmastropolo/hoarders-corner/assets/135174286/ff366a4b-dd37-48a2-8de3-8793f929a0bd)
+
 ## Description
 
 Hoarder's Corner is an innovative platform designed to cater to the diverse interests of collectors. This application serves as a virtual showcase for users to display, discuss, and potentially trade their cherished possessions. It offers a diverse range of collections for users to explore and join, providing a unique opportunity to connect with like-minded individuals.

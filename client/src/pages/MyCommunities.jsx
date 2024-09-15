@@ -27,6 +27,8 @@ export default function MyCommunities() {
   );
   const [showModal, setShowModal] = useState(false);
   const [name, setInputValue] = useState("");
+  const [tagline, setTagline] = useState("");
+  const [description, setDescription] = useState("");
 
   if (loading) return <p>...loading</p>;
   if (error) return <p>{error}</p>;
@@ -45,11 +47,22 @@ export default function MyCommunities() {
     event.preventDefault();
     setInputValue(event.target.value);
   };
+
+  const handleChangeTagline = (event) => {
+    event.preventDefault();
+    setTagline(event.target.value);
+  };
+
+  const handleChangeDescription = (event) => {
+    event.preventDefault();
+    setDescription(event.target.value);
+  };
+
   // function for creating a community
   const submitCommunityForm = async (event) => {
     try {
       const { data } = await addCommunity({
-        variables: { name },
+        variables: { name, tagline, description },
       });
     } catch (err) {
       console.error(err);
@@ -58,6 +71,7 @@ export default function MyCommunities() {
     if (data) {
       setShowModal(false);
       setInputValue("");
+      setTagline("");
     } else {
       console.log("didn't create community");
     }
@@ -83,13 +97,15 @@ export default function MyCommunities() {
             <div className="flex flex-col gap-4">
               {myCommunities.communities.map((c, i) => (
                 <CommunityRow
-                  key={i}
-                  _id={c._id}
-                  name={c.name}
-                  members={c.users.length}
-                  items={c.items.filter((i) => i.isPublic).length}
-                  isMyCommunity={true}
-                  hasButton={true}
+                key={i}
+                _id={c._id}
+                description={c.description}
+                name={c.name}
+                members={c.users.length}
+                items={c.items.filter((i) => i.isPublic).length}
+                isMyCommunity={true}
+                tagline={c.tagline}
+                hasButton={true}
                 />
               ))}
             </div>
@@ -98,12 +114,29 @@ export default function MyCommunities() {
             <Modal
               heading={"Create A Community"}
               body={
-                <input
-                  type="text"
-                  placeholder="Title it here"
-                  value={name}
-                  onChange={handleInputChange}
-                />
+                <div className="flex flex-col gap-1">
+                  <input
+                    type="text"
+                    placeholder="Title it here"
+                    className="px-3 py-2"
+                    value={name}
+                    onChange={handleInputChange}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Enter Description"
+                    value={description}
+                    className="px-3 py-2"
+                    onChange={handleChangeDescription}
+                  />
+                  <textarea
+                    type="text"
+                    className="px-3 py-2"
+                    placeholder="Enter Tagline"
+                    value={tagline}
+                    onChange={handleChangeTagline}
+                  />
+                </div>
               }
               btnLabel={"Create"}
               btnAction={() => submitCommunityForm()}

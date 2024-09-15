@@ -1,11 +1,42 @@
 [
-  { "name": "Books" },
-  { "name": "Magic the Gathering" },
-  { "name": "Vinyl Records" },
-  { "name": "Bottle Caps" },
-  { "name": "Blue Rays" },
-  { "name": "Beer Mugs" },
-  { "name": "Porcelain Dolls" },
-  { "name": "Cheese Curds" },
-  { "name": "Video Games" }
+  {
+    "name": "Books",
+    "tagline": "A community for book enthusiasts to discuss their favorite books."
+  },
+  {
+    "name": "Magic the Gathering",
+    "tagline": "A community for fans of the Magic: The Gathering card game."
+  },
+  {
+    "name": "Vinyl Records",
+    "tagline": "A community for vinyl record collectors and music lovers."
+  },
+  {
+    "name": "Bottle Caps",
+    "tagline": "A community for collectors of bottle caps and related items."
+  },
+  {
+    "name": "Blue Rays",
+    "tagline": "A community for Blu-ray movie enthusiasts."
+  },
+  {
+    "name": "Beer Mugs",
+    "tagline": "A community for beer enthusiasts and collectors of beer mugs."
+  },
+  {
+    "name": "Porcelain Dolls",
+    "tagline": "A community for collectors and admirers of porcelain dolls."
+  },
+  {
+    "name": "Cheese Curds",
+    "tagline": "A community for cheese curd enthusiasts and connoisseurs."
+  },
+  {
+    "name": "Board Games",
+    "tagline": "Board Game enthusiasts."
+  },
+  {
+    "name": "Video Games",
+    "tagline": "A community for gamers to discuss and share their favorite video games."
+  }
 ]

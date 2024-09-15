@@ -1,8 +1,16 @@
+// IMPORT MODELS
 const { User, Community, Item, Message } = require("../models");
+
+// IMPORT AUTH UTILITIES
 const { signToken, AuthenticationError } = require("../utils/auth");
+
+// IMPORT MONGOOSE
 const mongoose = require("mongoose");
+
+// GET OBJECTID TYPE
 const { ObjectId } = mongoose.Types;
 
+// DEFINE RESOLVERS
 const resolvers = {
   Query: {
     // user queries
@@ -15,7 +23,8 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    // community queries
+    
+     // COMMUNITY QUERIES
     communities: async () => {
       return Community.find().populate([{ path: "users" }, { path: "items" }]);
     },
@@ -78,6 +87,7 @@ const resolvers = {
     },
   },
   Mutation: {
+    // USER MUTATIONS
     createUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);
@@ -99,8 +109,10 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addCommunity: async (parent, { name }, context) => {
-      const newCommunity = await Community.create({ name });
+
+    // COMMUNITY MUTATIONS
+    addCommunity: async (parent, { name, tagline, description }, context) => {
+      const newCommunity = await Community.create({ name, tagline, description });
 
       const addToMyCommunities = await User.findByIdAndUpdate(
         context.user._id,
@@ -150,6 +162,8 @@ const resolvers = {
         $pull: { communities: communityId },
       });
     },
+
+    // MESSAGE MUTATIONS
     sendMessage: async (_, { sender, recipient, content }, context) => {
       const newMessage = await Message.create({ sender, recipient, content });
       await User.findOneAndUpdate(
@@ -162,9 +176,11 @@ const resolvers = {
       );
       return newMessage;
     },
+
+    // ITEM MUTATIONS 
     createItem: async (
       parent,
-      { name, description, owner, isPublic, community, communityId },
+      { name, description, owner, isPublic, community, communityId, imageUrl },
       context
     ) => {
       const newItem = await Item.create({
@@ -174,6 +190,7 @@ const resolvers = {
         isPublic,
         ownerId: context.user._id,
         community,
+        imageUrl,
       });
 
       await User.findByIdAndUpdate(context.user._id, {
@@ -211,4 +228,6 @@ const resolvers = {
   },
 };
 
+// EXPORT RESOLVERS
 module.exports = resolvers;
+

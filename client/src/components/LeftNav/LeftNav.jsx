@@ -1,31 +1,31 @@
-import Auth from "../../utils/auth";
-import LoginForm from "./LoginForm";
-import SignupForm from "./SignupForm";
+import Auth from "../../utils/auth"; // Import auth utils
+import LoginForm from "./LoginForm";  // import login component
+import SignupForm from "./SignupForm";  // import signup form component
 
 import { Link, useLocation } from "react-router-dom";
 import Button from "../Atoms/Button";
 
 import { QUERY_MY_HOARDS, QUERY_MY_MESSAGES, QUERY_COMMUNITIES, QUERY_MY_COMMUNITIES } from "../../utils/queries";
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";  // import useQuery hook from apollo client
 
-import { useUserContext } from "../../utils/userContext";
+import { useUserContext } from "../../utils/userContext";  // import user context
 import { useEffect } from "react";
 
 function MessagesTab() {
-  const currentPage = useLocation().pathname;
+  const currentPage = useLocation().pathname;  // Gets current Page
 
   // Gets the count for the messages tab
-  const { loading, data, error } = useQuery(QUERY_MY_MESSAGES);
+  const { loading, data, error } = useQuery(QUERY_MY_MESSAGES);  // Execute messages query
 
-  if (loading) return <h1>Loading..</h1>;
+  if (loading) return <h1>Loading..</h1>;  // handle loading state
 
-  if (error) return <h1>{error}</h1>;
+  if (error) return <h1>{error}</h1>;  // handle error state
 
-  const myMessages = data?.myMessages || [];
+  const myMessages = data?.myMessages || [];  // get messeages data
 
   const unreadCount = myMessages.messagesReceived.filter(
     (m) => !m.isRead
-  )?.length;
+  )?.length;  // Calculate unread count
 
   return (
     <div className=" h-14 flex items-center ">
@@ -41,7 +41,7 @@ function MessagesTab() {
         Messages
       </Link>
 
-      {unreadCount > 0 && (
+      {unreadCount > 0 && ( // Conditionally show unread count badge
         <div className="bg-pri-5 rounded-full h-6 w-6 flex items-center ">
           <p className="mx-auto text-neu-0">{unreadCount}</p>
         </div>
@@ -51,7 +51,7 @@ function MessagesTab() {
 }
 
 function MyHoards() {
-  const { myHoards } = useUserContext();
+  const { myHoards } = useUserContext();  // Get hoards from context
 
   return (
     myHoards.length > 0 && (
@@ -60,7 +60,7 @@ function MyHoards() {
         {myHoards.length === 0 ? (
           <p>You have not joined any communities</p>
         ) : (
-          myHoards.map((h, i) => (
+          myHoards.map((h, i) => ( // map over hoards
             <NavLink key={i} label={h.name} to={`/hoard/${h._id}`} />
           ))
         )}
@@ -69,7 +69,7 @@ function MyHoards() {
   );
 }
 
-function SectionLabel({ label }) {
+function SectionLabel({ label }) { // reusable section label component
   return (
     <div className="px-4 h-14 flex items-center ">
       <h3 className="text-h3 font-bold text-neu-7">{label}</h3>
@@ -77,17 +77,8 @@ function SectionLabel({ label }) {
   );
 }
 
-function NavLink({ to, label, refetch }) {
+function NavLink({ to, label }) { // reusable navlink component
   const currentPage = useLocation().pathname;
-  const { loading, data, error } = useQuery(QUERY_COMMUNITIES);
-  // const { loading, data, error } = useQuery(QUERY_MY_COMMUNITIES);
-
-
-  const handleClick = () => {
-    if (refetch) {
-      refetch();
-    }
-  };
 
   return (
     <div className="h-10 ">
@@ -98,7 +89,6 @@ function NavLink({ to, label, refetch }) {
             : "text-neu-7 "
         }`}
         to={to}
-        onClick={handleClick}
       >
         {label}
       </Link>
@@ -106,29 +96,19 @@ function NavLink({ to, label, refetch }) {
   );
 }
 
-export default function LeftNav({ hasHeader }) {
+export default function LeftNav() {
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
   };
 
-  const { refetch } = useQuery(QUERY_COMMUNITIES);
-  const { refetch: myCommsRefetch} = useQuery(QUERY_MY_COMMUNITIES);
-  
   return (
-    < >
-    <div className="container h-full">
-    <div className="scroll-smooth sticky top-0 bg-neu-2 ">
-      
-      <div className="bg-neu-0 h-full min-w-[290px] max-w-[290px] ">
-
-        {hasHeader && (
-          <div className="h-14 bg-opac-pri flex px-4 py-4 items-center ">
-            <i className="fa-solid fa-box text-h3 text-pri-5 mr-2"></i>
-            <h2 className="text-h2 font-bold text-neu-9">Hoarder's Corner</h2>
-          </div>
-        )}
-
+    <>
+      <div className={`bg-neu-0 h-full min-w-[290px] max-w-[290px]`}>
+        <div className="h-14 bg-opac-pri flex px-4 py-4 items-center">
+          <i className="fa-solid fa-box text-h3 text-pri-5 mr-2"></i>
+          <h2 className="text-h2 font-bold text-neu-9">Hoarder's Corner</h2>
+        </div>
         {Auth.loggedIn() ? (
           <div
             className="h-full flex flex-col"
@@ -137,8 +117,8 @@ export default function LeftNav({ hasHeader }) {
             <div className="flex-grow overflow-auto">
               <MessagesTab />
               <SectionLabel label="Communities" />
-              <NavLink label="All Communities" to="/" refetch={refetch} />
-              <NavLink label="My Communities" to="/my-communities" refetch={myCommsRefetch} />
+              <NavLink label="All Communities" to="/" />
+              <NavLink label="My Communities" to="/my-communities" />
               <MyHoards />
             </div>
             <div className="w-full bg-neu-0 px-4 py-2 border-t-2 border-opac-neu flex-shrink">
@@ -146,13 +126,11 @@ export default function LeftNav({ hasHeader }) {
             </div>
           </div>
         ) : (
-          <div id="left-nav-login">
+          <div>
             <LoginForm />
             <SignupForm />
           </div>
         )}
-      </div>
-      </div>
       </div>
     </>
   );

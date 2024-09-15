@@ -1,0 +1,8 @@
+.description {
+        display: none;
+        transition: display 0.5s ease;
+      }
+      
+      .communityRow:hover .description {
+        display: block;
+      }
